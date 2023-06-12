@@ -13,14 +13,12 @@ UPPER_LIMIT = 1000
 def check(secret_number, input_number):
     if secret_number == input_number:
         return True
-
     return False
 
 
 def comparison(secret_number, input_number):
     if secret_number > input_number:
         return "Больше!"
-
     return "Меньше!"
 
 
