@@ -7,7 +7,7 @@ def print_table(start_pos, stop_pos, count_pos, transfer_pos):
         while (count_pos < transfer_pos):
             if (i == 10):
                 indent = " "
-            elif (i * count_pos)//10 == 0:
+            elif i * count_pos // 10 == 0:
                 indent = "   "
             else:
                 indent = "  "
