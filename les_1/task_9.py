@@ -4,8 +4,8 @@ def print_table(start_pos, stop_pos, count_pos, transfer_pos):
     count_reset = count_pos
     indent = None
     for i in range(start_pos, stop_pos):
-        while (count_pos < transfer_pos):
-            if (i == 10):
+        while count_pos < transfer_pos:
+            if i == 10:
                 indent = " "
             elif i * count_pos // 10 == 0:
                 indent = "   "
