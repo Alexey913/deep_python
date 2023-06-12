@@ -18,7 +18,7 @@ while True:
         break
 if input_number // 100 > 0:
     message = "Введено трехзначное число. Зеркальное отображение числа равно"
-    result = input_number % 10 * 100 + (input_number // 10) % 10 * 10 + input_number // 100
+    result = input_number % 10 * 100 + input_number // 10 % 10 * 10 + input_number // 100
 elif input_number // 10 > 0:
     message = "Введено двухзначное число. Произведение цифр числа равно"
     result = (input_number // 10) * (input_number % 10)
