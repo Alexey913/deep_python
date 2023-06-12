@@ -20,8 +20,8 @@ def check(secret_number, input_number):
 def comparison(secret_number, input_number):
     if secret_number > input_number:
         return "Больше!"
-    else:
-        return "Меньше!"
+
+    return "Меньше!"
 
 
 print("Я загадаю случайное число в диапазоне от 0 до 1000.\nПопробуй его отгадать за 10 попыток")
