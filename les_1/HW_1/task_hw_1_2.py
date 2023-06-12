@@ -11,16 +11,15 @@ while True:
         print ("Неверный ввод!")
     else:
         break
-if input_data == 0 or input_data == 1:
+if input_data <= 1:
        print(f"Число {input_data} не является ни простым, ни составным!")
 else:
-    for i in range (2, input_data):
-        if input_data % i != 0:
-            i+=1
-        else:
+    final_pos = int(input_data ** 0.5) + 1
+    for i in range (2, final_pos):
+        if input_data % i == 0:
             check = True
             break
     if check:
         print(f"Число {input_data} является составным!")
     else:
-        print(f"Число {input_data} является простым!")   
+        print(f"Число {input_data} является простым!")
