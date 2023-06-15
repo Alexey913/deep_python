@@ -12,8 +12,7 @@
 from random import randint
 list_of_items = ["Котелок", "Палатка", "Гитара", "Мангал",
                  "Шампура", "Тушенка", "Мясо", "Вода", "Сухпаек", "Спички"]
-list_of_people = ["Вася", "Петя",
-                  "Валера - куда ж без него"]
+list_of_people = ["Вася", "Петя", "Валера"]
 dict_list_for_hike = {}
 temp_quantity_items = set()
 quantity_items = int(len(list_of_items) / len(list_of_people)) * 2
@@ -43,19 +42,23 @@ for human in list_of_people:
 print(common_items)
 
 print("Уникальные вещи:")
-unique_items = []
+unique_items = set()
+sum_items = set()
 for human in list_of_people:
-    for item in set(dict_list_for_hike.get(human)):
-        unique_items.append(item)
-for item in unique_items:
-    if unique_items.count(item) > 1:
-        while unique_items.count(item) != 0:
-            unique_items.remove(item)
-print(unique_items)
-
-print("Вещи, кроме одного:")
+    for key, val in dict_list_for_hike.items():
+        if human != key:
+            sum_items = sum_items.union(val)
+            unique_items = unique_items.union(val)
+        else:
+            unique_items = unique_items.union(val)
+    print(f"\t- взял только {human} - {unique_items.difference(sum_items)}")
+    unique_items = set()
+    sum_items = set()
+    
+print("Кто-то что-то не взял:")
+sum_items = set()
 for human in list_of_people:
-    for item in list_of_items:
-        if item in set(dict_list_for_hike.get(human)):
-            
-
+    for key, val in dict_list_for_hike.items():
+        sum_items = sum_items.union(val)
+    print(f"\t- {human} не взял - {sum_items.difference(set(dict_list_for_hike[human]))}")
+    sum_items = set()
