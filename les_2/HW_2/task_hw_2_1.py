@@ -8,7 +8,7 @@ BASE = 16
 
 def convert(input_number: int) -> str:
     output_number = []
-    translate_to_hex = {10:'a', 11:'b', 12:'c', 13:'d', 14:'e', 15:'f'}
+    translate_to_hex = '0123456789abcdef'
     while input_number > 0:
         delimeter = input_number % BASE
         for keys_for_hex in translate_to_hex:
