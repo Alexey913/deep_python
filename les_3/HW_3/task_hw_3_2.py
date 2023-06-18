@@ -30,8 +30,7 @@ Python является мультипарадигменным языком пр
 marks = punctuation + "\n"
 print(marks)
 for mark in marks:
-    if mark in marks:
-        text = text.replace(mark, " ")
+    text = text.replace(mark, " ")
 print(text)
 list_for_count = text.lower().replace("   ", " ").replace("  ", " ").split(" ")
 dict_count_words = {}
