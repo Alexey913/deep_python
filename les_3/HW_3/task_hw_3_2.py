@@ -32,7 +32,7 @@ print(marks)
 for mark in marks:
     text = text.replace(mark, " ")
 print(text)
-list_for_count = text.lower().replace("   ", " ").replace("  ", " ").split(" ")
+list_for_count = text.lower().split()
 dict_count_words = {}
 for val in list_for_count:
     dict_count_words[val] = list_for_count.count(val)
