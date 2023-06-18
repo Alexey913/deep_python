@@ -59,6 +59,6 @@ print("Кто-то что-то не взял:")
 sum_items = set()
 for human in list_of_people:
     for key, val in dict_list_for_hike.items():
-        sum_items = sum_items.union(val)
+        sum_items = sum_items.intersection(val)
     print(f"\t- {human} не взял - {sum_items.difference(set(dict_list_for_hike[human]))}")
     sum_items = set()
