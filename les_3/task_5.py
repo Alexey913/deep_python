@@ -5,7 +5,7 @@
 
 list_ = [5, 4, 8, 9, 9, 5, 2, 0, 1, 8, 14, 14, 14]
 list_index = []
-for i, val in enumerate(list_):
+for i, val in enumerate(list_, 1):
     if val % 2 != 0:
-        list_index.append(i+1)
+        list_index.append(i)
 print(list_index)
