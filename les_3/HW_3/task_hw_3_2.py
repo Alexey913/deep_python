@@ -34,7 +34,7 @@ for mark in marks:
 print(text)
 list_for_count = text.lower().split()
 dict_count_words = {}
-for val in list_for_count:
+for val in set(list_for_count):
     dict_count_words[val] = list_for_count.count(val)
 sorted_tuples = sorted(dict_count_words.items(), key = lambda item: item[1], reverse=True)
 for i in range(10):
