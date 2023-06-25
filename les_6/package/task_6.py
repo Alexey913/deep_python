@@ -4,6 +4,7 @@
 # Отдельно напишите функцию, которая выводит результаты угадывания из защищённого словаря в удобном для чтения виде. 
 # Для формирования результатов используйте генераторное выражение.
 
+__all__ = ['some_riddles', 'print_dictionary_answer']
 
 QUATITY_TRY = 3
 
@@ -16,7 +17,7 @@ def riddle(text, list_of_key):
             print(f"Вы угадали с {i+1} попытки!")
             return i+1
         else:
-            print(f"неверно! Попробуйте еще раз!")
+            print(f"неверно! {text}")
     return 0
 
 
@@ -24,8 +25,8 @@ def some_riddles():
     dict_riddle = {"Зимой и летом одним цветом":["Ёлка", "елка", "ёлка", "Елка", "ель", "Ель"],\
                    "Не расческа, а свистит":["Свисток", "Свист", "свисток"],
                    "Не ведро, а гавкает":["Собака", "пес", "Щенок"]}
-    for rid, answ in dict_riddle.items():
-        form_dict(rid, riddle(rid, answ))
+    _dictionary_answer = {form_dict(rid, riddle(rid, answ)) for rid, answ in dict_riddle.items()}
+    return(_dictionary_answer)
         
 
 def form_dict(text_of_riddle, answer_riddle):
