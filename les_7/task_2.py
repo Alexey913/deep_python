@@ -27,4 +27,4 @@ def name_gen(quntity_strings: int, name_file: str):
 
 
 if __name__ == "__main__":
-    name_gen(INPUT_ROW, "./files/letters.txt")
+    name_gen(INPUT_ROW, "./files/task_2/letters.txt")

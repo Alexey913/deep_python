@@ -19,4 +19,4 @@ def write_file(quntity_strings: int, name_file: str):
 
 
 if __name__ == "__main__":
-    write_file(INPUT_ROW, "./files/numbers.txt")
+    write_file(INPUT_ROW, "./files/task_!/numbers.txt")

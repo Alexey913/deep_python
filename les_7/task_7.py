@@ -2,7 +2,7 @@
 # Каждая группа включает файлы с несколькими расширениями. 
 # В исходной папке должны остаться только те файлы, которые не подошли для сортировки.
 
-import os
+from os import listdir, path, mkdir, replace, getcwd
 from pathlib import Path
 
 DICT_EXT = {"Музыка": ("mp3", "flac", "wav"),
@@ -11,6 +11,22 @@ DICT_EXT = {"Музыка": ("mp3", "flac", "wav"),
             "Текст": ("txt", "doc", "bin")}
 
 def sort_files(directory):
-    file_list = [files for *_, files in os.walk(directory)]
+    file_list = [files for files in listdir(directory)]
+    for file in file_list:
+        if path.isfile(directory+"/"+file):
+            for fold, exts in DICT_EXT.items():
+                if file.split(".")[-1] in exts:
+                    dir_path = check_dir(directory, fold)
+                    replace(directory + "/" + file, (dir_path + "/" + file))
     return file_list
-print (sort_files(os.getcwd()+"/files/"))
+
+
+def check_dir(dir_path, folder):
+    name_fold = dir_path + folder
+    if not folder in listdir(dir_path):
+        mkdir(name_fold)
+    return name_fold
+
+
+if __name__ == "__main__":
+    sort_files("./files/task_7/")
