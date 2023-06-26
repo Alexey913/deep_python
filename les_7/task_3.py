@@ -8,26 +8,32 @@
 # При достижении конца более короткого файла, 
 # возвращайтесь в его начало.
 
-def gen_common_file(name_file_1: str, name_file_2: str):
+def gen_common_file(name_file_1, name_file_2):
     with (
-        open(name_file_1, 'r', encoding='utf-8') as names,\
-        open(name_file_2, 'r', encoding='utf-8') as numbers,\
-        open("./files/total_file", 'w', encoding='utf-8') as total
-        ):
+    open(name_file_1, 'r', encoding='utf-8') as names,\
+    open(name_file_2, 'r', encoding='utf-8') as numbers,\
+    open("total_file", 'w+', encoding='utf-8') as total
+    ):
         len_numbers = sum(1 for _ in numbers)
         len_names = sum(1 for _ in names)
-        for i in range(max(len_numbers, len_names)):
-            num_line = read_per_line(numbers)
-            # num_res = float(num_line[0])*float(num_line[1])
-            print(num_line)
+        max_len = max(len_numbers, len_names)
+        names.seek(0,0)
+        numbers.seek(0,0)
+        print(len_names, len_numbers)
+        for name, num in zip(names, numbers):
+            if name == "\n":
+                names.seek(0,0)
+            if num == "\n":
+                numbers.seek(0,0)
+            num_mult = float(num.split('|')[0])*float(num.split('|')[1])
+            if num_mult < 0:
+                total.write(f"{name.lower()[:-1]} {abs(num_mult)}\n")
+            else:
+                total.write(f"{name.upper()[:-1]} {int(num_mult)}\n")
 
-
-def read_per_line(name_file):
-    for line in name_file:
-        yield str(line)
-
-
+            
+    
+    
 if __name__ == "__main__":
-    gen_common_file("./files/letters.txt", "./files/numbers.txt")
+    gen_common_file("letters.txt", "numbers.txt")
 # Используем метод seek
-
