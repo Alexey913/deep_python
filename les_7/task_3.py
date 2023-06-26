@@ -8,6 +8,8 @@
 # При достижении конца более короткого файла, 
 # возвращайтесь в его начало.
 
+__all__ = ['gen_common_file']
+
 def gen_common_file(name_file_1, name_file_2):
     with (
     open(name_file_1, 'r', encoding='utf-8') as names,\

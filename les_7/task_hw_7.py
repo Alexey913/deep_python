@@ -11,6 +11,8 @@
 
 from os import listdir, rename, path, getcwd
 
+__all__ = ['group_rename']
+
 
 def group_rename(begin_extention, final_extention, range_of_begin_sym=[0, 0], final_name="", len_count=2):
     count = 1

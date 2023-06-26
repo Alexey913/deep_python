@@ -12,6 +12,8 @@ from random import choices, randint
 from string import ascii_lowercase, digits
 # from os import urandom
 
+__all__ = ['create_files']
+
 
 def create_files(extention, min_len_name=6, max_len_name=30, min_byte=256, max_byte=4096, count_files=2):
     for _ in range(count_files):

@@ -5,10 +5,13 @@
 from os import listdir, path, mkdir, replace, getcwd
 from pathlib import Path
 
+__all__ = ['sort_files']
+
 DICT_EXT = {"Музыка": ("mp3", "flac", "wav"),
             "Видео": ("mkv", "mp4", "avi"),
             "Изображения": ("jpg", "png", "gif"),
             "Текст": ("txt", "doc", "bin")}
+
 
 def sort_files(directory):
     file_list = [files for files in listdir(directory)]

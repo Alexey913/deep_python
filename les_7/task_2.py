@@ -6,11 +6,15 @@
 # ✔ Полученные имена сохраните в файл.
 from random import choice, randint, sample
 
+__all__ = ['name_gen']
+
 MIN_LEN = 4
 MAX_LEN = 7
 VOWEL_LETTERS = 'eyuioa'
 CONSONANT_LETTERS =  'qwrtpsdfghjklzxcvbnm'
 INPUT_ROW = 5
+
+
 def name_gen(quntity_strings: int, name_file: str):
     with open(name_file, mode='a', encoding='utf-8') as f:
         new_name = ""

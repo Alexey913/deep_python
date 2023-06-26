@@ -12,6 +12,8 @@ MAX_LIMIT = 1000
 INPUT_ROW = 5
 
 
+__all__ = ['write_file']
+
 def write_file(quntity_strings: int, name_file: str):
     with open(name_file, mode='a', encoding='utf-8') as f:
         for _ in range(quntity_strings):
