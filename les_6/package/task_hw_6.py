@@ -54,7 +54,7 @@ def _put_place_queen(new_column, pos_queen, total_solution):
         total_solution.append(tuple(pos_queen))
     else:
         for new_row in range(1, _SIZE+1):
-            if (_no_dangerous((new_column, new_row), pos_queen)):
+            if _no_dangerous((new_column, new_row), pos_queen):
                 _put_place_queen(new_column+1, pos_queen+[(new_column, new_row)], total_solution)
 
 
