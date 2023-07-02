@@ -60,8 +60,8 @@ def _put_place_queen(new_column, pos_queen, total_solution):
 
 def _no_dangerous(new_point, pos_queen):
     for point in pos_queen:
-        if (point[0] == new_point[0] or point[1] == new_point[1] or \
-        abs(point[0] - new_point[0]) == abs(point[1] - new_point[1])):
+        if point[0] == new_point[0] or point[1] == new_point[1] or \
+        abs(point[0] - new_point[0]) == abs(point[1] - new_point[1]):
             return False
     return True
 
