@@ -6,7 +6,7 @@
 # суммы цифр id на семь
 
 from random import randint as rnd
-from Human import Human
+from Task_3_Human import Human
 
 
 class Staff(Human):
