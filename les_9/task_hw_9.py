@@ -40,16 +40,13 @@ def decorator_for_save_solution(func: Callable):
         file_coef = "./les_9/files/generator_hw.csv"
         params = []
         result = func(*args)
+        result = func(*args)
         with (
             open(file_solution, 'w', encoding='utf-8') as sol,
-            open(file_coef, 'r', newline="", encoding='utf-8') as coef
         ):
-            csv_reader = csv.reader(coef)
-            key_count = 1
-            for in_, out_ in zip(csv_reader, result):
-                params.append(
-                    {f"Ex_{key_count}": f"Input values: {in_} Roots equation:{out_}"})
-                key_count += 1
+            params.append(
+                {'Input values': str(args), 'Roots equation': str(result)})
+            json.dump(params, sol, indent=2)
             json.dump(params, sol, indent=2)
     return wrapper
 
