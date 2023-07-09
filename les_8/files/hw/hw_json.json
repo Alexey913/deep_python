@@ -1,0 +1,144 @@
+{
+  ".\\les_8\\files": {
+    "1": {
+      "name": "hw",
+      "parrent_folder": ".\\les_8\\files",
+      "type": "folder",
+      "size": 2221
+    },
+    "2": {
+      "name": "task_1",
+      "parrent_folder": ".\\les_8\\files",
+      "type": "folder",
+      "size": 559
+    },
+    "3": {
+      "name": "task_2",
+      "parrent_folder": ".\\les_8\\files",
+      "type": "folder",
+      "size": 281
+    },
+    "4": {
+      "name": "task_3",
+      "parrent_folder": ".\\les_8\\files",
+      "type": "folder",
+      "size": 123
+    },
+    "5": {
+      "name": "task_4",
+      "parrent_folder": ".\\les_8\\files",
+      "type": "folder",
+      "size": 1120
+    },
+    "6": {
+      "name": "task_5",
+      "parrent_folder": ".\\les_8\\files",
+      "type": "folder",
+      "size": 2866
+    },
+    "7": {
+      "name": "task_6",
+      "parrent_folder": ".\\les_8\\files",
+      "type": "folder",
+      "size": 958
+    }
+  },
+  ".\\les_8\\files\\hw": {
+    "1": {
+      "name": "hw_csv.csv",
+      "parrent_folder": ".\\les_8\\files\\hw",
+      "type": "file",
+      "size": 1216
+    },
+    "2": {
+      "name": "hw_json.json",
+      "parrent_folder": ".\\les_8\\files\\hw",
+      "type": "file",
+      "size": 0
+    },
+    "3": {
+      "name": "hw_pickle.pickle",
+      "parrent_folder": ".\\les_8\\files\\hw",
+      "type": "file",
+      "size": 1005
+    }
+  },
+  ".\\les_8\\files\\task_1": {
+    "1": {
+      "name": "json_file.json",
+      "parrent_folder": ".\\les_8\\files\\task_1",
+      "type": "file",
+      "size": 559
+    }
+  },
+  ".\\les_8\\files\\task_2": {
+    "1": {
+      "name": "json_file.json",
+      "parrent_folder": ".\\les_8\\files\\task_2",
+      "type": "file",
+      "size": 281
+    }
+  },
+  ".\\les_8\\files\\task_3": {
+    "1": {
+      "name": "csv_file.csv",
+      "parrent_folder": ".\\les_8\\files\\task_3",
+      "type": "file",
+      "size": 123
+    }
+  },
+  ".\\les_8\\files\\task_4": {
+    "1": {
+      "name": "new_json_file.json",
+      "parrent_folder": ".\\les_8\\files\\task_4",
+      "type": "file",
+      "size": 1120
+    }
+  },
+  ".\\les_8\\files\\task_5": {
+    "1": {
+      "name": "csv_file.csv",
+      "parrent_folder": ".\\les_8\\files\\task_5",
+      "type": "file",
+      "size": 123
+    },
+    "2": {
+      "name": "json_file.json",
+      "parrent_folder": ".\\les_8\\files\\task_5",
+      "type": "file",
+      "size": 559
+    },
+    "3": {
+      "name": "json_file.pickle",
+      "parrent_folder": ".\\les_8\\files\\task_5",
+      "type": "file",
+      "size": 472
+    },
+    "4": {
+      "name": "new_json_file.json",
+      "parrent_folder": ".\\les_8\\files\\task_5",
+      "type": "file",
+      "size": 1120
+    },
+    "5": {
+      "name": "new_json_file.pickle",
+      "parrent_folder": ".\\les_8\\files\\task_5",
+      "type": "file",
+      "size": 592
+    }
+  },
+  ".\\les_8\\files\\task_6": {
+    "1": {
+      "name": "csv_file.csv",
+      "parrent_folder": ".\\les_8\\files\\task_6",
+      "type": "file",
+      "size": 366
+    },
+    "2": {
+      "name": "new_json_file.pickle",
+      "parrent_folder": ".\\les_8\\files\\task_6",
+      "type": "file",
+      "size": 592
+    }
+  }
+}
