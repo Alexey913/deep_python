@@ -40,13 +40,16 @@ def decorator_for_save_solution(func: Callable):
         file_coef = "./les_9/files/generator_hw.csv"
         params = []
         result = func(*args)
-        result = func(*args)
         with (
             open(file_solution, 'w', encoding='utf-8') as sol,
+            open(file_coef, 'r', newline="", encoding='utf-8') as coef
         ):
-            params.append(
-                {'Input values': str(args), 'Roots equation': str(result)})
-            json.dump(params, sol, indent=2)
+            csv_reader = csv.reader(coef)
+            key_count = 1
+            for in_, out_ in zip(csv_reader, result):
+                params.append(
+                    {f"Ex_{key_count}": f"Input values: {in_} Roots equation:{out_}"})
+                key_count += 1
             json.dump(params, sol, indent=2)
     return wrapper
 
@@ -56,13 +59,16 @@ def decorator_for_solution(func: Callable):
     def wrapper():
         with open("./les_9/files/generator_hw.csv", 'r', newline="", encoding='utf-8') as f:
             csv_reader = csv.reader(f)
+            list_solution = []
             for roots in csv_reader:
-                func(*map(int, roots))
+                res_1, res_2 = func(*map(int, roots))
+                list_solution.append((str(res_1), str(res_2)))
+        return list_solution
     return wrapper
 
 
-@decorator_for_solution
 @decorator_for_save_solution
+@decorator_for_solution
 def root_quadratic_equation(*args):
     """Фунция для вычилсения квадратного уравнения.
     Корни в генерируются в csv-файле. Решения выводятся в json-файл"""
