@@ -58,9 +58,7 @@ def decorator_for_solution(func: Callable):
             csv_reader = csv.reader(f)
             list_solution = []
             for roots in csv_reader:
-                res_1, res_2 = func(*map(int, roots))
-                list_solution.append((str(res_1), str(res_2)))
-        return list_solution
+                func(*map(int, roots))
     return wrapper
 
 
