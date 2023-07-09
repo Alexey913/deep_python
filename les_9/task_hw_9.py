@@ -56,7 +56,6 @@ def decorator_for_solution(func: Callable):
     def wrapper():
         with open("./les_9/files/generator_hw.csv", 'r', newline="", encoding='utf-8') as f:
             csv_reader = csv.reader(f)
-            list_solution = []
             for roots in csv_reader:
                 func(*map(int, roots))
     return wrapper
