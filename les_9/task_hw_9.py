@@ -64,8 +64,8 @@ def decorator_for_solution(func: Callable):
     return wrapper
 
 
-@decorator_for_save_solution
 @decorator_for_solution
+@decorator_for_save_solution
 def root_quadratic_equation(*args):
     """Фунция для вычилсения квадратного уравнения.
     Корни в генерируются в csv-файле. Решения выводятся в json-файл"""
