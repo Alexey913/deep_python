@@ -47,25 +47,7 @@ class Rectangle:
             return True
         return False
 
-    def __gt__(self, other) -> bool: # больше, >
-        if self.area_rectangle() > other.area_rectangle():
-            return True
-        return False
-
-    def __ge__(self, other) -> bool: # не больше, меньше или равно, <=
-        if self.area_rectangle() <= other.area_rectangle():
-            return True
-        return False
     
-    def __lt__(self, other) -> bool: # меньше, <
-        if self.area_rectangle() < other.area_rectangle():
-            return True
-        return False
-    
-    def __le__(self, other) -> bool: # не меньше, больше или равно, >=
-        if self.area_rectangle() >= other.area_rectangle():
-            return True
-        return False        
 
 
 if __name__ == "__main__":
