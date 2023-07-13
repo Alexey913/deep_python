@@ -41,13 +41,14 @@ class Descript:
 
 
 class Student:
-    __FILL_SUBJECTS = False
+    
     def __init__(self, *args, list_disciplines=_LIST_DSCIPLINE):
+        self.__FILL_SUBJECTS = False
         self.dict_discipline = self.fill_discipline(list_disciplines)
         if len(args) == 3:
-            self._surname, self._name, self._patronymic = args
+            self.surname, self.name, self.patronymic = args
         elif len(args) == 1:
-            self._surname, self._name, self._patronymic = args[0].split()
+            self.surname, self.name, self.patronymic = args[0].split()
         else:
             raise ValueError("Необходимо ввести ФИО одной строкой или отдельными значениями")
         
@@ -86,37 +87,37 @@ class Student:
 
     def __str__(self):
         if self.__FILL_SUBJECTS:
-            return f"{self._surname} {self._name[0]}.{self._patronymic[0]}.\n\t" +\
+            return f"{self.surname} {self.name[0]}.{self.patronymic[0]}.\n\t" +\
             "\n\t".join(f"{discipline}: {score}" for discipline, score in self.dict_discipline.items()) +\
             f"\nСредний бал по предметам: {self.average_subject()}\tСредний бал по тестам: {self.average_test()}"
         else:
-            return f"{self._surname} {self._name[0]}.{self._patronymic[0]}.\n\t" +\
+            return f"{self.surname} {self.name[0]}.{self.patronymic[0]}.\n\t" +\
             "Оценки не выставлены"
             
         
 
 
     def generate_scores(self):
-        with open(f"{self._surname}_{self._name[0]}_{self._patronymic[0]}.json", "w", encoding='utf-8') as f:
+        with open(f"{self.surname}_{self.name[0]}_{self.patronymic[0]}.json", "w", encoding='utf-8') as f:
             for name_sub, kind in self.dict_discipline.items():
                 if kind == _SUBJECT:
                     self.dict_discipline[name_sub] = rnd(_DOWN_LIMIT_SUBJECT, _UP_LIMIT_SUBJECT)
                 elif kind == _TEST:
                     self.dict_discipline[name_sub] = rnd(_DOWN_LIMIT_TEST, _UP_LIMIT_TEST)
-            json.dump({f"{self._surname} {self._name[0]}.{self._patronymic[0]}":self.dict_discipline}, f, indent=2, ensure_ascii=False)
+            json.dump({f"{self.surname} {self.name[0]}.{self.patronymic[0]}":self.dict_discipline}, f, indent=2, ensure_ascii=False)
         self.__FILL_SUBJECTS = True
 
-    @property
-    def name(self):
-        return self._name
+    # @property
+    # def name(self):
+    #     return self._name
     
-    @property
-    def surname(self):
-        return self._surname
+    # @property
+    # def surname(self):
+    #     return self._surname
     
-    @property
-    def patronymic(self):
-        return self._patronymic
+    # @property
+    # def patronymic(self):
+    #     return self._patronymic
 
 
         
@@ -126,10 +127,5 @@ if __name__ == "__main__":
     print(p)
     r.generate_scores()
     print(r)
-    print(p.average_subject())
-    print(r.average_test())
-
-
-
-
-
+    p.generate_scores()
+    print(p)
