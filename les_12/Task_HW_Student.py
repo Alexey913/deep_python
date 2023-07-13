@@ -10,6 +10,7 @@
 
 import csv
 import json
+from os import path
 from random import randint as rnd
 
 _DOWN_LIMIT_SUBJECT = 2
@@ -20,7 +21,16 @@ _SUBJECT = "предмет"
 _TEST = "тест"
 _LIST_DSCIPLINE = "list.csv"
 
-class Descript:
+
+class Descriptor:
+    def __init__(self, down_limit_test: int = None, up_limit_test: int = None,
+                 down_limit_subject: int = None, up_limit_subject: int = None,
+                 list_disciplines=_LIST_DSCIPLINE):
+        self.list_disciplines = list_disciplines
+        self.down_limit_test = down_limit_test
+        self.up_limit_test = up_limit_test
+        self.down_limit_subject = down_limit_subject
+        self.up_limit_subject = up_limit_subject
 
     def __set_name__(self, owner, name):
         self.param_name = '_' + name
@@ -29,103 +39,142 @@ class Descript:
         return getattr(instance, self.param_name)
 
     def __set__(self, instance, value):
-        self.validate(value)
+        if isinstance(value, str):
+            self.validate_name(value)
+        if isinstance(value, dict):
+            self.validate_dict(value)
         setattr(instance, self.param_name, value)
 
-    def validate(self, value):
-        if value > 0:
-            self.side = value
-        else:
-            raise ValueError(
-                'Значение длины стороны не должно быть отрицательным')
+    def __delete__(self, instance):
+        raise AttributeError(f'Свойство "{self.param_name}" нельзя удалять')
+
+    def validate_name(self, value):
+        if value.capitalize() != value or not value.isalpha():
+            raise ValueError(f'Значение "{value}" должно начинаться с заглавной буквы и \
+не должно содержать ничего, кроме букв')
+
+    def _create_dict_subject(self):
+        with open(self.list_disciplines, 'r', newline='', encoding='utf-8') as f:
+            reader = csv.reader(f)
+            return {line[0]: line[1] for line in reader}
+
+    def validate_dict(self, value):
+        temp_dict = self._create_dict_subject()
+        for subject, score in value.items():
+            if isinstance(score, int) == False:
+                raise ValueError(
+                    f'Оценка или результат теста должны быть целым числом')
+            if subject not in temp_dict:
+                raise ValueError(
+                    f'Значение "{subject}" отсутствует в списке предметов')
+            if self.down_limit_test is not None and self.up_limit_test is not None \
+                    and temp_dict[subject] == _TEST \
+                    and score not in range(_DOWN_LIMIT_TEST, _UP_LIMIT_TEST+1):
+                raise ValueError(
+                    f'Результат теста "{subject}: {score}" должно быть в диапазоне {_DOWN_LIMIT_TEST, _UP_LIMIT_TEST}')
+            if self.down_limit_subject is not None and self.up_limit_subject is not None \
+                    and temp_dict[subject] == _SUBJECT \
+                    and score not in range(_DOWN_LIMIT_SUBJECT, _UP_LIMIT_SUBJECT+1):
+                raise ValueError(
+                    f'Оценка по предмету "{subject}: {score}" должно быть в диапазоне {_DOWN_LIMIT_SUBJECT, _UP_LIMIT_SUBJECT}')
 
 
 class Student:
-    
-    def __init__(self, *args, list_disciplines=_LIST_DSCIPLINE):
-        self.__FILL_SUBJECTS = False
-        self.dict_discipline = self.fill_discipline(list_disciplines)
+
+    name = Descriptor()
+    surname = Descriptor()
+    patronymic = Descriptor()
+    dict_discipline = Descriptor(
+        _DOWN_LIMIT_TEST, _UP_LIMIT_TEST, _DOWN_LIMIT_SUBJECT, _UP_LIMIT_SUBJECT)
+
+    def __init__(self, *args):
+        self.dict_discipline = {}
         if len(args) == 3:
             self.surname, self.name, self.patronymic = args
         elif len(args) == 1:
             self.surname, self.name, self.patronymic = args[0].split()
         else:
-            raise ValueError("Необходимо ввести ФИО одной строкой или отдельными значениями")
-        
-    def fill_discipline(self, list_disciplines):
-        temp_dict = {}
+            raise ValueError(
+                "Необходимо ввести ФИО одной строкой или отдельными значениями")
+
+    def _create_dict_subject(self, list_disciplines=_LIST_DSCIPLINE):
         with open(list_disciplines, 'r', newline='', encoding='utf-8') as f:
             reader = csv.reader(f)
-            for line in reader:
-                temp_dict[line[0]] = line[1]
-        return temp_dict
-    
-    def average_subject(self):
-        if self.__FILL_SUBJECTS:
-            sum = 0
-            count = 0
-            for name_sub, kind in self.fill_discipline(_LIST_DSCIPLINE).items():
-                if kind == _SUBJECT:
-                    sum+=self.dict_discipline[name_sub]
-                    count+=1
-            return sum/count
-        else:
-            return None
-            
-    def average_test(self):
-        if self.__FILL_SUBJECTS:
-            sum = 0
-            count = 0
-            for name_sub, kind in self.fill_discipline(_LIST_DSCIPLINE).items():
-                if kind == _TEST:
-                    sum+=self.dict_discipline[name_sub]
-                    count+=1
-            return sum/count
-        else:
-            return None
-
-
-    def __str__(self):
-        if self.__FILL_SUBJECTS:
-            return f"{self.surname} {self.name[0]}.{self.patronymic[0]}.\n\t" +\
-            "\n\t".join(f"{discipline}: {score}" for discipline, score in self.dict_discipline.items()) +\
-            f"\nСредний бал по предметам: {self.average_subject()}\tСредний бал по тестам: {self.average_test()}"
-        else:
-            return f"{self.surname} {self.name[0]}.{self.patronymic[0]}.\n\t" +\
-            "Оценки не выставлены"
-            
-        
-
+            return {line[0]: line[1] for line in reader}
 
     def generate_scores(self):
         with open(f"{self.surname}_{self.name[0]}_{self.patronymic[0]}.json", "w", encoding='utf-8') as f:
-            for name_sub, kind in self.dict_discipline.items():
+            temp_dict = {}
+            for name_sub, kind in self._create_dict_subject(_LIST_DSCIPLINE).items():
                 if kind == _SUBJECT:
-                    self.dict_discipline[name_sub] = rnd(_DOWN_LIMIT_SUBJECT, _UP_LIMIT_SUBJECT)
+                    temp_dict[name_sub] = rnd(
+                        _DOWN_LIMIT_SUBJECT, _UP_LIMIT_SUBJECT)
                 elif kind == _TEST:
-                    self.dict_discipline[name_sub] = rnd(_DOWN_LIMIT_TEST, _UP_LIMIT_TEST)
-            json.dump({f"{self.surname} {self.name[0]}.{self.patronymic[0]}":self.dict_discipline}, f, indent=2, ensure_ascii=False)
-        self.__FILL_SUBJECTS = True
+                    temp_dict[name_sub] = rnd(
+                        _DOWN_LIMIT_TEST, _UP_LIMIT_TEST)
+            json.dump(temp_dict, f, indent=2, ensure_ascii=False)
+        self.dict_discipline = temp_dict
 
-    # @property
-    # def name(self):
-    #     return self._name
-    
-    # @property
-    # def surname(self):
-    #     return self._surname
-    
-    # @property
-    # def patronymic(self):
-    #     return self._patronymic
+    def put_score(self, subject, score):
+        file_name = f"{self.surname}_{self.name[0]}_{self.patronymic[0]}.json"
+        if path.isfile(file_name) and path.getsize(file_name) > 0:
+            with open(file_name, "r", encoding='utf-8') as f:
+                temp_dict = json.load(f)
+        else:
+            temp_dict = {}
+        temp_dict[subject] = score
+        self.dict_discipline = temp_dict
+        with open(file_name, "w", encoding='utf-8') as f:
+            json.dump(temp_dict, f, indent=2, ensure_ascii=False)
+
+    def average_subject(self):
+        sum = 0
+        count = 0
+        for name_sub, kind in self._create_dict_subject(_LIST_DSCIPLINE).items():
+            if kind == _SUBJECT and name_sub in self.dict_discipline.keys():
+                sum += self.dict_discipline[name_sub]
+                count += 1
+        return sum/count if count > 0 else 0
+
+    def average_test(self):
+        sum = 0
+        count = 0
+        for name_sub, kind in self._create_dict_subject(_LIST_DSCIPLINE).items():
+            if kind == _TEST and name_sub in self.dict_discipline.keys():
+                sum += self.dict_discipline[name_sub]
+                count += 1
+        return sum/count if count > 0 else 0
+
+    def __str__(self):
+        if self.dict_discipline:
+            return f"{self.surname} {self.name[0]}.{self.patronymic[0]}.\n\t" +\
+                "\n\t".join(f"{discipline}: {score}" for discipline, score in self.dict_discipline.items()) +\
+                f"\nСредний бал по предметам: {self.average_subject()}\tСредний бал по тестам: {self.average_test()}"
+        else:
+            return f"{self.surname} {self.name[0]}.{self.patronymic[0]}.\n\t" +\
+                "Оценки не выставлены"
 
 
-        
 if __name__ == "__main__":
-    p = Student("Петров", "Иван", "Иванович")
-    r = Student("Иванов Петр Аркадьевич")
-    print(p)
-    r.generate_scores()
-    print(r)
-    p.generate_scores()
-    print(p)
+    pii = Student("Петров", "Иван", "Иванович")
+    ipa = Student("Иванов Петр Аркадьевич")
+    print(ipa)
+    # pro = Student("Птичкин Р8ман Олегович") #ValueError: Значение "Р8ман" должно начинаться с заглавной буквы и не должно содержать ничего, кроме букв
+    # pro = Student("птичкин Роман Олегович") #ValueError: Значение "птичкин" должно начинаться с заглавной буквы и не должно содержать ничего, кроме букв
+    print("----------")
+    ipa.put_score("История", 10)
+    print(ipa)
+    # ipa.put_score("физра", 10) #ValueError: Значение "физра" отсутствует в списке предметов
+    print("----------")
+    print(ipa)
+    ipa.generate_scores()
+    print("----------")
+    print(ipa)
+    # ipa.put_score("Математика", 0) #ValueError: Оценка по предмету "Математика: 0" должно быть в диапазоне (2, 5)
+    # print(ipa)
+    print("----------")
+    print("----------")
+    print(pii)
+    pii.generate_scores()
+    print("----------")
+    print(pii)
