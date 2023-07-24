@@ -51,7 +51,6 @@ class Rectangle:
         newside_1 = max(self.side_1, self.side_2,
                         other.side_1, other.side_2)
         newside_2 = int((common_p - 2 * newside_1) / 2)
-        print(newside_1, newside_2)
         return Rectangle(newside_1, newside_2)
 
     def __sub__(self, other):
@@ -62,7 +61,6 @@ class Rectangle:
         newside_2 = int((difference - 2 * newside_1) / 2)
         if newside_2 < 0:
             newside_1 = newside_2 = difference / 4
-        print(newside_1, newside_2)
         return Rectangle(newside_1, newside_2)
 
     def __eq__(self, other) -> bool:  # равно ==
