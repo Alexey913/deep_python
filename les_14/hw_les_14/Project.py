@@ -16,7 +16,7 @@ class Project:
         users = []
         for level, user in temp.items():
             for uid, name in user.items():
-                users.append(User(name, uid, level))
+                users.append(User(name, int(uid), int(level)))
         return Project(users)
 
     def __str__(self):
@@ -79,10 +79,11 @@ if __name__ == "__main__":
         print(u)
         print(u.admin)
         print("___________________")
-        u.enter('Sam', '114')
+        u.enter('Sam',114)
         print(u.admin)
         print("___________________")
-        u.add_user('Carl', 106, 6)
+        u.add_user('Carl', 1014, 6)
+        u.add_user('Crowly', 0, 3)
         print(u)
         print("___________________")
         u.del_user('Crowly', 0)

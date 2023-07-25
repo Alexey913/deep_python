@@ -3,56 +3,61 @@
 # Напишите 3-7 тестов pytest для данного проекта.
 # Используйте фикстуры.
 
+import re
 import pytest
 from Project import Project
 from User import User
 import Excep as Ex
 
 @pytest.fixture
-def data():
+def project():
     return Project.load_users('users.json')
 
-def test_enter(data):
-    data.enter('Han', '105')
-    assert data.admin.name == 'Han' and \
-            data.admin.uid == '105'
+@pytest.fixture
+def admin(project):
+    project.enter('Sam', 114)
+    return project.admin
 
-def test_enter_error(data):
-    with pytest.raises(Ex.ErrorAcsess, match="Пользователя Иван с ID-Дурак не существует!"):
-        data.enter('Иван', "Дурак")
+def test_enter(project):
+    project.enter('Han', 105)
+    assert project.admin.name == 'Han' and \
+            project.admin.uid == 105
 
-def test_add_user(data):
-    data.enter('Sam', 114)
-    new_user = User('Иван', '105', 7)
-    data.add_user('Иван', '105', 7)
-    assert new_user in data.users
+def test_enter_error(project):
+    with pytest.raises(Ex.ErrorAcsess, match="Пользователя Иван с ID-10 не существует!"):
+        project.enter('Иван', 10)
 
-def test_add_user_error_level(data):
-    data.enter('Sam', '114')
-    with pytest.raises(Ex.ErrorLevel, match="Операция для пользователя Иван не может быть выполнена, т.к. его уровень доступа (1) выше, чем уровень администратора (4)!"):
-        data.add_user('Иван', '105', 1)
+def test_add_user(project, admin):
+    new_user = User('Иван', 105, 7)
+    project.add_user('Иван', 105, 7)
+    assert new_user in project.users
 
-def test_add_user_error_user(data):
-    data.enter('Sam', '114')
+def test_add_user_error_level(project, admin):
+    with pytest.raises(Ex.ErrorLevel, match=re.escape("Операция для пользователя Иван не может быть выполнена, \
+т.к. его уровень доступа (1) выше, чем уровень администратора (4)!")):
+        project.add_user('Иван', 105, 1)
+
+def test_add_user_error_user(project, admin):
+
     with pytest.raises(Ex.ErrorUser, match="Пользователь Carl с ID-106 уже существует!"):
-        data.add_user('Carl', '106', 6)
+        project.add_user('Carl', 106, 6)
 
-def test_del_user(data):
-    data.enter('Sam', '114')
-    new_user = User('Han', '105', 5)
-    data.del_user('Han', '105')
-    assert not new_user in data.users
+def test_del_user(project, admin):
+    new_user = User('Han', 105, 5)
+    project.del_user('Han', 105)
+    assert not new_user in project.users
 
-def test_del_user_error_user(data):
-    data.enter('Sam', '114')
+def test_del_user_error_user(project, admin):
     with pytest.raises(Ex.ErrorAcsess, match="Пользователя Иван с ID-105 не существует!"):
-        data.del_user('Иван', '105')
+        project.del_user('Иван', 105)
 
-def test_del_user_error_level(data):
-    data.enter('Sam', '114')
-    with pytest.raises(Ex.ErrorLevel, match="Операция для пользователя Lee не может быть выполнена, \
-т.к. его уровень доступа (1) выше, чем уровень администратора (4)!"):
-        data.del_user('Lee', '101')
+def test_del_user_error_level(project, admin):
+    with pytest.raises(Ex.ErrorLevel, match=re.escape("Операция для пользователя Lee не может быть выполнена, \
+т.к. его уровень доступа (1) выше, чем уровень администратора (4)!")):
+        project.del_user('Lee', 104)
+
+# def test_file_not_exist(project):
+
 
 if __name__ == '__main__':
     pytest.main(['-v'])
