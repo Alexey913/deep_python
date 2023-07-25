@@ -82,7 +82,7 @@ if __name__ == "__main__":
         u.enter('Sam', '114')
         print(u.admin)
         print("___________________")
-        u.add_user('Crowly', 0, 6)
+        u.add_user('Carl', 106, 6)
         print(u)
         print("___________________")
         u.del_user('Crowly', 0)

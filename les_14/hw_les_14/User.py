@@ -18,7 +18,7 @@ class User:
     
     def __eq__(self, other) -> bool:
         if self.name == other.name and\
-        self.uid == other.uid:
+        int(self.uid) == int(other.uid):
             return True
         return False
     

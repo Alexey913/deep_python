@@ -18,15 +18,41 @@ def test_enter(data):
             data.admin.uid == '105'
 
 def test_enter_error(data):
-    with pytest.raises(Ex.ErrorAcsess):
+    with pytest.raises(Ex.ErrorAcsess, match="Пользователя Иван с ID-Дурак не существует!"):
         data.enter('Иван', "Дурак")
 
 def test_add_user(data):
-    data.enter('Sam', '114')
-    data.add_user('Иван', 105, 7)
-    new_user = User('Иван', 105, 7)
+    data.enter('Sam', 114)
+    new_user = User('Иван', '105', 7)
+    data.add_user('Иван', '105', 7)
     assert new_user in data.users
 
+def test_add_user_error_level(data):
+    data.enter('Sam', '114')
+    with pytest.raises(Ex.ErrorLevel, match="Операция для пользователя Иван не может быть выполнена, т.к. его уровень доступа (1) выше, чем уровень администратора (4)!"):
+        data.add_user('Иван', '105', 1)
+
+def test_add_user_error_user(data):
+    data.enter('Sam', '114')
+    with pytest.raises(Ex.ErrorUser, match="Пользователь Carl с ID-106 уже существует!"):
+        data.add_user('Carl', '106', 6)
+
+def test_del_user(data):
+    data.enter('Sam', '114')
+    new_user = User('Han', '105', 5)
+    data.del_user('Han', '105')
+    assert not new_user in data.users
+
+def test_del_user_error_user(data):
+    data.enter('Sam', '114')
+    with pytest.raises(Ex.ErrorAcsess, match="Пользователя Иван с ID-105 не существует!"):
+        data.del_user('Иван', '105')
+
+def test_del_user_error_level(data):
+    data.enter('Sam', '114')
+    with pytest.raises(Ex.ErrorLevel, match="Операция для пользователя Lee не может быть выполнена, \
+т.к. его уровень доступа (1) выше, чем уровень администратора (4)!"):
+        data.del_user('Lee', '101')
 
 if __name__ == '__main__':
     pytest.main(['-v'])
