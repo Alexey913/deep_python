@@ -12,7 +12,7 @@ import Excep as Ex
 
 @pytest.fixture()
 def project():
-    return Project.load_users('users.status.json')
+    return Project.load_users('users.json')
 
 @pytest.fixture
 def admin(project):
