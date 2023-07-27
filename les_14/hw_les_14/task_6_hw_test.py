@@ -9,9 +9,9 @@ from Project import Project
 from User import User
 import Excep as Ex
 
-@pytest.fixture
+@pytest.fixture()
 def project():
-    return Project.load_users('users.json')
+    return Project.load_users('usersgit status.json')
 
 @pytest.fixture
 def admin(project):
