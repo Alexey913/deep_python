@@ -72,11 +72,14 @@ def folder_content_to_pickle(path_folder, path_file):
         pickle.dump(_content_in_folder(path_folder), p_f)
 
 
+def run_app(folder):
+
+    folder_content_to_json(folder, '.\\les_8\\files\\hw\\hw_json.json')
+    folder_content_to_pickle(folder, '.\\les_8\\files\\hw\\hw_pickle.pickle')
+    folder_content_to_csv(folder, '.\\les_8\\files\\hw\\hw_csv.csv')
+
 if __name__ == "__main__":
-    input_dict = _content_in_folder(".\\les_8\\files")
-    folder_content_to_json(".\\les_8\\files", '.\\les_8\\files\\hw\\hw_json.json')
-    folder_content_to_pickle(".\\les_8\\files", '.\\les_8\\files\\hw\\hw_pickle.pickle')
-    folder_content_to_csv(".\\les_8\\files", '.\\les_8\\files\\hw\\hw_csv.csv')
+    run_app(".\\les_8\\files")
 
     with open('.\\les_8\\files\\hw\\hw_json.json', 'r', encoding='utf-8') as ff:
         diction_json = json.load(ff)
