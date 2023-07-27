@@ -5,6 +5,7 @@
 
 import re
 import pytest
+from os import path
 from Project import Project
 from User import User
 import Excep as Ex
@@ -56,7 +57,10 @@ def test_del_user_error_level(project, admin):
 т.к. его уровень доступа (1) выше, чем уровень администратора (4)!")):
         project.del_user('Lee', 104)
 
-# def test_file_not_exist(project):
+def test_file_not_exist(project, tmp_path):
+    f_name = tmp_path / 'result.json'
+    project.write_to_json(f_name)
+    assert path.exists(f_name) == True and path.getsize(f_name) != 0
 
 
 if __name__ == '__main__':

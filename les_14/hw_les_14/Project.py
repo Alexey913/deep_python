@@ -26,7 +26,7 @@ class Project:
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        self.write_to_json()
+        self.write_to_json("./result.json")
 
     def __del__(self):
         print("\tСессия завершена!")
@@ -61,8 +61,8 @@ class Project:
         else:
             self.users.remove(new_user)
 
-    def write_to_json(self):
-        with open("./result.json", 'w', encoding='utf-8') as f:
+    def write_to_json(self, path_file):
+        with open(path_file, 'w', encoding='utf-8') as f:
             temp_dict = {k: "" for k in range(1, 8)}
             for user in self.users:
                 for key, value in temp_dict.items():
@@ -83,7 +83,7 @@ if __name__ == "__main__":
         print(u.admin)
         print("___________________")
         u.add_user('Carl', 1014, 6)
-        u.add_user('Crowly', 0, 3)
+        u.add_user('Crowly', 0, 5)
         print(u)
         print("___________________")
         u.del_user('Crowly', 0)
