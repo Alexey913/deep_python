@@ -13,19 +13,22 @@ import argparse
 import logging
 
 
+_FILE_PATH = path.dirname(path.realpath(__file__))+'\\files\\task_6.log'
+
 FORMAT = '{levelname:<4}: {msg}'
 
-logging.basicConfig(format=FORMAT, style='{', filename=path.dirname(path.realpath(__file__))+'\\files\\task_6.log', \
+logging.basicConfig(format=FORMAT, style='{', filename=_FILE_PATH,
                     filemode='w', encoding='utf-8', level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-FileType = namedtuple('FileType', ['name', 'extension', 'folder_flag', 'parrent_folder'])
+FileType = namedtuple(
+    'FileType', ['name', 'extension', 'folder_flag', 'parrent_folder'])
 
 
 def folder_content():
     parser = argparse.ArgumentParser(prog="Работа с содержимым каталога")
-    parser.add_argument('-p', metavar='Путь к каталогу', type=str, nargs=1, \
+    parser.add_argument('-p', metavar='Путь к каталогу', type=str, nargs=1,
                         help='Введите абсолютный или относительный путь к каталогу', default=[getcwd()])
     args = parser.parse_args()
     return _find_content(args.p[0])
@@ -60,12 +63,12 @@ def _folder_extract(folder):
             parrent_folder = abs_path.split('\\')[-2]
             temp_ = FileType(name, extension, folder_flag, parrent_folder)
             if temp_.folder_flag:
-                logger.info(f'{i}.{j} - Каталог: {temp_.name} ' + \
-                            f'| Флаг каталога: {temp_.folder_flag} ' +\
+                logger.info(f'{i}.{j} - Каталог: {temp_.name} ' +
+                            f'| Флаг каталога: {temp_.folder_flag} ' +
                             f'| Родительский каталог: {parrent_folder}')
             else:
-                logger.info(f'{i}.{j} - Файл: {temp_.name} ' + \
-                            f'| Расширение: {temp_.extension} ' + \
+                logger.info(f'{i}.{j} - Файл: {temp_.name} ' +
+                            f'| Расширение: {temp_.extension} ' +
                             f'| Родительский каталог: {parrent_folder}')
             list_of_files.append(temp_)
     return list_of_files
